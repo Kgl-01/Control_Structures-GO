@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
+
+const accountBalanceFile = "balance.txt"
 
 func main() {
 
@@ -33,6 +38,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Println("Balance updated! New amount:", accountBalance)
+			writeBalanceToFile(accountBalance)
 		case 3:
 			fmt.Print("Enter amount:")
 			var withdrawalAmount float64
@@ -50,6 +56,7 @@ func main() {
 
 			accountBalance -= withdrawalAmount
 			fmt.Println("Withdraw successful! Updated balance:", accountBalance)
+			writeBalanceToFile(accountBalance)
 		case 4:
 			fmt.Println("Goodbye!")
 			fmt.Print("Thanks for choosing our bank")
@@ -60,4 +67,10 @@ func main() {
 	}
 
 	fmt.Print("Thanks for choosing our bank")
+}
+
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	fmt.Print([]byte(balanceText))
+	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
 }
