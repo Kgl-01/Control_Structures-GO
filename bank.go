@@ -14,8 +14,10 @@ func main() {
 	var accountBalance, err = readBalanceFromFile()
 
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("Error: ")
+		fmt.Println(err)
 		fmt.Println("----------------")
+		//panic("Can't continue, sorry.")
 	}
 
 	for {
