@@ -21,13 +21,7 @@ func main() {
 	}
 
 	for {
-		fmt.Println("Welcome to Go Bank!")
-		fmt.Println("What fo you want to do?")
-		fmt.Println("1. Check the balance")
-		fmt.Println("2. Deposit Money")
-		fmt.Println("3. Withdraw Money")
-		fmt.Println("4. Exit")
-
+		presentOptions()
 		var choice int
 		fmt.Print("Enter your choice: ")
 
@@ -86,7 +80,7 @@ func readBalanceFromFile() (float64, error) {
 	data, err := os.ReadFile(accountBalanceFile)
 
 	if err != nil {
-		return 7000, errors.New("Failed to find balance file.")
+		return 1000, errors.New("Failed to find balance file.")
 	}
 
 	balanceText := string(data)
