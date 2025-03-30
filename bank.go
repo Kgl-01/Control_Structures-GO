@@ -11,7 +11,7 @@ const accountBalanceFile = "balance.txt"
 
 func main() {
 
-	var accountBalance, err = readBalanceFromFile()
+	var accountBalance, err = readFloatFromFile(accountBalanceFile, 1000)
 
 	if err != nil {
 		fmt.Println("Error: ")
@@ -41,7 +41,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Println("Balance updated! New amount:", accountBalance)
-			writeBalanceToFile(accountBalance)
+			writeFloatToFile(accountBalanceFile, accountBalance)
 		case 3:
 			fmt.Print("Enter amount:")
 			var withdrawalAmount float64
@@ -59,7 +59,7 @@ func main() {
 
 			accountBalance -= withdrawalAmount
 			fmt.Println("Withdraw successful! Updated balance:", accountBalance)
-			writeBalanceToFile(accountBalance)
+			writeFloatToFile(accountBalanceFile, accountBalance)
 		case 4:
 			fmt.Println("Goodbye!")
 			fmt.Print("Thanks for choosing our bank")
@@ -72,23 +72,23 @@ func main() {
 	fmt.Print("Thanks for choosing our bank")
 }
 
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
-	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
+func writeFloatToFile(fileName string, value float64) {
+	valueText := fmt.Sprint(value)
+	os.WriteFile(fileName, []byte(valueText), 0644)
 }
-func readBalanceFromFile() (float64, error) {
-	data, err := os.ReadFile(accountBalanceFile)
+func readFloatFromFile(fileName string, defaultValue float64) (float64, error) {
+	data, err := os.ReadFile(fileName)
 
 	if err != nil {
-		return 1000, errors.New("Failed to find balance file.")
+		return defaultValue, errors.New("Failed to find file.")
 	}
 
-	balanceText := string(data)
-	balance, err := strconv.ParseFloat(balanceText, 64)
+	valueText := string(data)
+	value, err := strconv.ParseFloat(valueText, 64)
 
 	if err != nil {
-		return 1000, errors.New("Failed to parse stored balance value.")
+		return defaultValue, errors.New("Failed to parse stored value.")
 	}
 
-	return balance, nil
+	return value, nil
 }
